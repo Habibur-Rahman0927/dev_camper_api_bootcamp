@@ -1,7 +1,9 @@
+const path = require('path')
 const express = require('express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
 const color = require('colors');
+const fileUpload = require('express-fileupload');
 const errorHandler = require('./middleware/error');
 const connectDB = require('./config/db')
 // Route files
@@ -22,6 +24,13 @@ app.use(express.json())
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
+
+// File Uploading
+app.use(fileUpload());
+
+// set static folder
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 // Mount routes
